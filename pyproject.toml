@@ -3,7 +3,9 @@ name = "app"
 version = "0.1.0"
 description = ""
 authors = ["tatsuki"]
-readme = "README.md"
+packages = [
+    { include = "test" }
+]
 
 [tool.poetry.dependencies]
 python = "^3.9"

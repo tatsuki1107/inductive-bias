@@ -14,6 +14,6 @@ class DataConfig:
 @dataclass(frozen=True)
 class MFConfig:
     n_factors: int = 100
-    lr: float = 0.00001
-    reg: float = 1.5
-    n_epochs: int = 5
+    lr: float = 0.1
+    reg: float = 0.5
+    n_epochs: int = 10

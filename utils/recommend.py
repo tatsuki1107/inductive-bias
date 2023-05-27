@@ -3,7 +3,9 @@ import pandas as pd
 
 
 def generate_rec_list(
-    data: np.ndarray, pred_mat: np.ndarray, top_k: int
+    data: np.ndarray,
+    pred_mat: np.ndarray,
+    top_k: int,
 ) -> np.ndarray:
     """各ユーザーへの推薦リストを生成する
 

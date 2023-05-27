@@ -3,3 +3,7 @@
 utils/__pycache__/
 feedbackloop/__pycache__/
 model/__pycache__/
+
+notebooks/train.ipynb 
+notebooks/with_selection_bias.ipynb
+test/

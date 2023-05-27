@@ -111,6 +111,36 @@ def main(cfg: DictConfig) -> None:
             )
             result_df = pd.concat([result_df, _df], ignore_index=True)
 
+        elif (
+            algo == "conventional_mf_with_selection_bias"
+            and config.selection_bias
+        ):
+            (
+                conv_train_losses,
+                conv_test_losses,
+                conv_ginis,
+                conv_jaccards,
+                conv_matrix,
+            ) = adamMF_loop(
+                data=data,
+                rate_time=rate_time,
+                feedback_epochs=config.feedback_epochs,
+                addnum=config.addnum,
+                seed=config.random_seed,
+                model_params=config.mf,
+                selection_bias=True,
+            )
+            _df = pd.DataFrame(
+                {
+                    "algorithm": [algo] * config.feedback_epochs,
+                    "jaccard_index": conv_jaccards,
+                    "gini_coef": conv_ginis,
+                    "train_loss": conv_train_losses,
+                    "test_loss": conv_test_losses,
+                }
+            )
+            result_df = pd.concat([result_df, _df], ignore_index=True)
+
     log_path = Path(f"{HydraConfig.get().runtime.output_dir}/results")
     log_path.mkdir(exist_ok=True, parents=True)
 

@@ -2,6 +2,7 @@ from model.mf import MF
 from utils.recommend import generate_rec_list
 from utils.indicator import calc_gini_coef, calc_jaccard_index
 from multiprocessing import Pool, cpu_count
+from scipy.stats import bernoulli
 import numpy as np
 import pandas as pd
 from typing import Tuple
@@ -16,6 +17,7 @@ def adamMF_loop(
     seed: int,
     model_params: MFConfig,
     universal: bool = False,
+    selection_bias: bool = False,
 ) -> Tuple[np.ndarray]:
     data_index = np.array([i for i in range(data.shape[0])])
 
@@ -85,6 +87,15 @@ def adamMF_loop(
             rec_indices.append(list(np.where(user_mask & item_mask)[0]))
 
         rec_indices = np.array(rec_indices).flatten()
+
+        if selection_bias:
+            user_ratings = data[rec_indices][:, 2]
+            p_user_selections = np.where(user_ratings > 4.0, 0.9, 0.2)
+            will_rate = bernoulli.rvs(
+                p_user_selections, random_state=12345
+            ).astype(bool)
+            rec_indices = rec_indices[will_rate]
+
         time_mask[rec_indices] = True
 
     log_data = data[data_index[time_mask]]

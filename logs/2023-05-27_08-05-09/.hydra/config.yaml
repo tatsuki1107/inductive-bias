@@ -1,0 +1,24 @@
+settings:
+  random_seed: 12345
+  addnum: 10
+  feedback_epochs: 5
+  dataset:
+    is_created: true
+    n_users: 500
+    n_items: 1000
+    rating_scale:
+    - 1
+    - 5
+    epsilon: 0.5
+    time_range: 40
+  mf:
+    n_factors: 100
+    lr: 0.1
+    reg: 0.5
+    n_epochs: 10
+  selection_bias: false
+  algo:
+  - conventional_mf
+  - conventional_mf_with_selection_bias
+  - ips_mf
+  - random

@@ -1,8 +1,8 @@
 random_seed: 12345
 addnum: 10
-feedback_epochs: 10
+feedback_epochs: 5
 dataset:
-    is_created: False
+    is_created: True
     n_users: 500
     n_items: 1000
     rating_scale:
@@ -12,11 +12,13 @@ dataset:
     time_range: 40
 mf:
     n_factors: 100
-    lr: 0.00001
-    reg: 1.5
-    n_epochs: 5
+    lr: 0.1
+    reg: 0.5
+    n_epochs: 10
+selection_bias: True
 
 algo:
     - "conventional_mf"
+    - "conventional_mf_with_selection_bias"
     - "ips_mf"
     - "random"
